@@ -195,7 +195,7 @@ object proceso {
 
     tempPart2.write.mode("overwrite").parquet(s"${hdfsPath}temp/part2")
 
-    spark.read.parquet(s"${hdfsPath}temp/part2").drop("count").coalesce(1).write.format("com.databricks.spark.csv").option("header", "true").option("delimiter", ";").save(s"${hdfsPath}csv/")
+    spark.read.parquet(s"${hdfsPath}temp/part2").drop("count").repartition(1).write.mode("overwrite").format("parquet").option("path",s"${hdfsPath}conformado/").saveAsTable("stg_datalakeb2b.fil_siscli")
 
 //    conformado.repartition(1).write.mode("overwrite").option("header", "true").option("delimiter", ";").csv(s"${hdfsPath}csv/test1.csv")
 //
